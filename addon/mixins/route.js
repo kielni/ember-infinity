@@ -312,7 +312,11 @@ const RouteMixin = Ember.Mixin.create({
 
   _doUpdate(newObjects) {
     let infinityModel = this._infinityModel();
-    return infinityModel.pushObjects(newObjects.get('content'));
+    if (emberDataVersionIs('lessThan', '1.0.0-beta.14')) {
+      return infinityModel.pushObjects(newObjects.get('content'));
+    } else {
+      return infinityModel.pushObjects(newObjects.toArray());
+    }
   },
 
   /**
